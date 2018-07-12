@@ -90,6 +90,9 @@ func NewCluster(options *Options) (*Cluster, error) {
 			continue
 		} else {
 			go cluster.handleUpdate()
+			for k, v := range cluster.nodes {
+				fmt.Println(k, *v)
+			}
 			return cluster, nil
 		}
 	}
