@@ -26,6 +26,7 @@ import (
 
 // Options is used to initialize a new redis cluster.
 type Options struct {
+	FrpsIP     string   // frp server IP
 	StartNodes []string // Startup nodes
 
 	ConnTimeout  time.Duration // Connection timeout
@@ -40,6 +41,8 @@ type Options struct {
 // cache and update cluster info, and execute all kinds of commands.
 // Multiple goroutines may invoke methods on a cluster simutaneously.
 type Cluster struct {
+	frpsIP string
+
 	slots [kClusterSlots]*redisNode
 	nodes map[string]*redisNode
 
@@ -66,6 +69,7 @@ type updateMesg struct {
 // NewCluster create a new redis cluster client with specified options.
 func NewCluster(options *Options) (*Cluster, error) {
 	cluster := &Cluster{
+		frpsIP:       options.FrpsIP,
 		nodes:        make(map[string]*redisNode),
 		connTimeout:  options.ConnTimeout,
 		readTimeout:  options.ReadTimeout,
@@ -351,7 +355,7 @@ func (cluster *Cluster) update(node *redisNode) error {
 
 		_, err = Scan(t, &ip, &port)
 		fmt.Println(ip, port)
-		ip = "222.88.93.241"
+		ip = cluster.frpsIP
 		if err != nil {
 			return errFormat
 		}
