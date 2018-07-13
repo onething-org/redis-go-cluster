@@ -11,6 +11,7 @@ import (
 func main() {
 	cluster, err := redis.NewCluster(
 		&redis.Options{
+			FrpsIP:       "222.88.93.241",
 			StartNodes:   []string{"127.0.0.1:7000", "127.0.0.1:7001", "127.0.0.1:7002"},
 			ConnTimeout:  50 * time.Millisecond,
 			ReadTimeout:  50 * time.Millisecond,
