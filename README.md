@@ -33,6 +33,7 @@ import "github.com/chasex/redis-go-cluster"
 
 cluster, err := redis.NewCluster(
     &redis.Options{
+	FrpsIP: "12.34.56.78",
 	StartNodes: []string{"127.0.0.1:7000", "127.0.0.1:7001", "127.0.0.1:7002"},
 	ConnTimeout: 50 * time.Millisecond,
 	ReadTimeout: 50 * time.Millisecond,
